@@ -5,23 +5,26 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "promotion")
-public class Promotion {
+@Table(name = "etudiant")
+public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PROMOTION", nullable = false)
+    @Column(name = "ID_ETUDIANT", nullable = false)
     private Integer id;
 
-    @Column(name = "LIBELLE", length = 20)
-    private String libelle;
+    @Column(name = "NOM", length = 25)
+    private String nom;
 
-    @OneToMany(mappedBy = "idPromotion", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "etudiants", cascade = CascadeType.ALL)
     private Set<Cour> cours = new LinkedHashSet<>();
 
-    public Promotion() {}
+    public Etudiant(String nom) {
+        this.nom = nom;
+        this.cours = new LinkedHashSet<>();
+    }
 
-    public Promotion(String libelle) {
-        this.libelle = libelle;
+    public Etudiant() {
+
     }
 
     public Integer getId() {
@@ -32,12 +35,12 @@ public class Promotion {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getNom() {
+        return nom;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public Set<Cour> getCours() {
@@ -47,5 +50,4 @@ public class Promotion {
     public void setCours(Set<Cour> cours) {
         this.cours = cours;
     }
-
 }

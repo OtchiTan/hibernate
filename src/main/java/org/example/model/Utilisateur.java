@@ -1,55 +1,29 @@
 package org.example.model;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.Instant;
 
 @Entity
 @Table(name = "utilisateur")
-@XmlRootElement
-@NamedQueries({
-        @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
-        , @NamedQuery(name = "Utilisateur.findById", query = "SELECT u FROM Utilisateur u WHERE u.id = :id")
-        , @NamedQuery(name = "Utilisateur.findByEmail", query = "SELECT u FROM Utilisateur u WHERE u.email = :email")
-        , @NamedQuery(name = "Utilisateur.findByMotDePasse", query = "SELECT u FROM Utilisateur u WHERE u.motDePasse = :motDePasse")
-        , @NamedQuery(name = "Utilisateur.findByNom", query = "SELECT u FROM Utilisateur u WHERE u.nom = :nom")
-        , @NamedQuery(name = "Utilisateur.findByDateInscription", query = "SELECT u FROM Utilisateur u WHERE u.dateInscription = :dateInscription")})
-public class Utilisateur implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Utilisateur {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "email")
+
+    @Column(name = "date_inscription", nullable = false)
+    private Instant dateInscription;
+
+    @Column(name = "email", nullable = false)
     private String email;
-    @Basic(optional = false)
-    @Column(name = "mot_de_passe")
+
+    @Column(name = "mot_de_passe", nullable = false)
     private String motDePasse;
-    @Basic(optional = false)
-    @Column(name = "nom")
+
+    @Column(name = "nom", nullable = false)
     private String nom;
-    @Basic(optional = false)
-    @Column(name = "date_inscription")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateInscription;
-
-    public Utilisateur() {
-    }
-
-    public Utilisateur(Integer id) {
-        this.id = id;
-    }
-
-    public Utilisateur( String email, String motDePasse, String nom, Date dateInscription) {
-        this.email = email;
-        this.motDePasse = motDePasse;
-        this.nom = nom;
-        this.dateInscription = dateInscription;
-    }
 
     public Integer getId() {
         return id;
@@ -57,6 +31,14 @@ public class Utilisateur implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Instant getDateInscription() {
+        return dateInscription;
+    }
+
+    public void setDateInscription(Instant dateInscription) {
+        this.dateInscription = dateInscription;
     }
 
     public String getEmail() {
@@ -81,39 +63,6 @@ public class Utilisateur implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public Date getDateInscription() {
-        return dateInscription;
-    }
-
-    public void setDateInscription(Date dateInscription) {
-        this.dateInscription = dateInscription;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Utilisateur)) {
-            return false;
-        }
-        Utilisateur other = (Utilisateur) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Entity.Utilisateur[ id=" + id + " ]";
     }
 
 }
