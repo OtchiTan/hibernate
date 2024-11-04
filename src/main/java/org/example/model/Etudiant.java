@@ -15,16 +15,11 @@ public class Etudiant {
     @Column(name = "NOM", length = 25)
     private String nom;
 
-    @ManyToMany(mappedBy = "etudiants", cascade = CascadeType.ALL)
-    private Set<Cour> cours = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "idEtudiant", cascade = CascadeType.ALL)
+    private Set<CoursEtudiant> coursEtudiants = new LinkedHashSet<>();
 
     public Etudiant(String nom) {
         this.nom = nom;
-        this.cours = new LinkedHashSet<>();
-    }
-
-    public Etudiant() {
-
     }
 
     public Integer getId() {
@@ -43,11 +38,12 @@ public class Etudiant {
         this.nom = nom;
     }
 
-    public Set<Cour> getCours() {
-        return cours;
+    public Set<CoursEtudiant> getCoursEtudiants() {
+        return coursEtudiants;
     }
 
-    public void setCours(Set<Cour> cours) {
-        this.cours = cours;
+    public void setCoursEtudiants(Set<CoursEtudiant> coursEtudiants) {
+        this.coursEtudiants = coursEtudiants;
     }
+
 }

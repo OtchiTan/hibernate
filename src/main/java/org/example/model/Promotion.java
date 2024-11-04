@@ -1,7 +1,9 @@
 package org.example.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,9 +18,7 @@ public class Promotion {
     private String libelle;
 
     @OneToMany(mappedBy = "idPromotion", cascade = CascadeType.ALL)
-    private Set<Cour> cours = new LinkedHashSet<>();
-
-    public Promotion() {}
+    private List<Cour> cours = new ArrayList<>();
 
     public Promotion(String libelle) {
         this.libelle = libelle;
@@ -40,11 +40,11 @@ public class Promotion {
         this.libelle = libelle;
     }
 
-    public Set<Cour> getCours() {
+    public List<Cour> getCours() {
         return cours;
     }
 
-    public void setCours(Set<Cour> cours) {
+    public void setCours(List<Cour> cours) {
         this.cours = cours;
     }
 

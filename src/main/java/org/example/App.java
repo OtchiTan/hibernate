@@ -9,10 +9,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class App {
+    static EntityManagerFactory emf;
+    static EntityManager em;
 
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
-        EntityManager em = emf.createEntityManager();
+        emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
+        em = emf.createEntityManager();
 
         em.getTransaction().begin();
 
@@ -20,6 +22,8 @@ public class App {
         for (int i = 1; i < 5; i++) {
             promotion.getCours().add(new Cour("JAVA Pro " + i, LocalDate.now(), i * 60, "C le java la", promotion));
         }
+
+        em.persist(promotion);
 
         ArrayList<Etudiant> etudiants = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
@@ -30,7 +34,7 @@ public class App {
 
         souscrireAUnePromotion(promotion, etudiants);
 
-        em.persist(promotion);
+        //em.persist(promotion);
 
         showPromotion(promotion);
 
@@ -41,12 +45,30 @@ public class App {
     }
 
     static void souscrireAUnePromotion(Promotion promotion, ArrayList<Etudiant> etudiants) {
-        promotion.getCours().forEach(cour -> {
-            etudiants.forEach(etudiant -> {
-                cour.getEtudiants().add(etudiant);
-                etudiant.getCours().add(cour);
-            });
-        });
+        float i = 0.0F;
+        for (Cour cour : promotion.getCours()) {
+            for (Etudiant etudiant : etudiants) {
+                CoursEtudiantId coursEtudiantId = new CoursEtudiantId();
+
+                coursEtudiantId.setIdCours(cour.getId());
+                coursEtudiantId.setIdEtudiant(etudiant.getId());
+
+                CoursEtudiant coursEtudiant = new CoursEtudiant();
+
+                coursEtudiant.setIdEtudiant(etudiant);
+                coursEtudiant.setIdCours(cour);
+                coursEtudiant.setId(coursEtudiantId);
+
+                coursEtudiant.setNote(i);
+
+                em.persist(coursEtudiant);
+
+                cour.getCoursEtudiants().add(coursEtudiant);
+                etudiant.getCoursEtudiants().add(coursEtudiant);
+
+                i++;
+            }
+        }
     }
 
     static void showPromotion(Promotion promotion) {
@@ -58,8 +80,8 @@ public class App {
 
     static void showCour(Cour cour) {
         System.out.println("Cour[" + cour.getId() + "]");
-        for (Etudiant etudiant : cour.getEtudiants()) {
-            System.out.println("Etudiant[" + etudiant.getId() + "]");
+        for (CoursEtudiant coursEtudiant : cour.getCoursEtudiants()) {
+            System.out.println("Etudiant[" + coursEtudiant.getIdEtudiant().getId() + "]");
         }
     }
 }

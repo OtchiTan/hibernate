@@ -29,16 +29,11 @@ public class Cour {
     @Column(name = "DESCRIPTION", length = 20)
     private String description;
 
-    @ManyToMany
-    @JoinTable(name = "cours_etudiant",
-            joinColumns = @JoinColumn(name = "ID_COURS"),
-            inverseJoinColumns = @JoinColumn(name = "ID_ETUDIANT"))
-    private Set<Etudiant> etudiants = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "idCours", cascade = CascadeType.ALL)
+    private Set<CoursEtudiant> coursEtudiants = new LinkedHashSet<>();
 
-    public Cour() {}
-
-    public Cour(String libelleCours, LocalDate date, Integer duree, String description, Promotion promotion) {
-        this.libelleCours = libelleCours;
+    public Cour(String libelle, LocalDate date, int duree, String description, Promotion promotion) {
+        this.libelleCours = libelle;
         this.date = date;
         this.duree = duree;
         this.description = description;
@@ -93,12 +88,12 @@ public class Cour {
         this.description = description;
     }
 
-    public Set<Etudiant> getEtudiants() {
-        return etudiants;
+    public Set<CoursEtudiant> getCoursEtudiants() {
+        return coursEtudiants;
     }
 
-    public void setEtudiants(Set<Etudiant> etudiants) {
-        this.etudiants = etudiants;
+    public void setCoursEtudiants(Set<CoursEtudiant> coursEtudiants) {
+        this.coursEtudiants = coursEtudiants;
     }
 
 }

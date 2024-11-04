@@ -6,6 +6,11 @@
   <persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>org.example.model.Utilisateur</class>
+    <class>org.example.model.CoursEtudiant</class>
+    <class>org.example.model.Cour</class>
+    <class>org.example.model.Etudiant</class>
+    <class>org.example.model.CoursEtudiantId</class>
+    <class>org.example.model.Promotion</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test"/>

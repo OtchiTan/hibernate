@@ -18,6 +18,9 @@ public class CoursEtudiant {
     @JoinColumn(name = "ID_ETUDIANT", nullable = false)
     private Etudiant idEtudiant;
 
+    @Column(name = "NOTE")
+    private Float note;
+
     public CoursEtudiantId getId() {
         return id;
     }
@@ -40,6 +43,14 @@ public class CoursEtudiant {
 
     public void setIdEtudiant(Etudiant idEtudiant) {
         this.idEtudiant = idEtudiant;
+    }
+
+    public Float getNote() {
+        return note;
+    }
+
+    public void setNote(Float note) {
+        this.note = note;
     }
 
 }
